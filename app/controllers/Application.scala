@@ -7,6 +7,9 @@ import play.api.libs.json.{JsValue, Json}
 
 object Application extends Controller {
 
+    private val WidthFactor = 100
+    private val HeightFactor = 100
+
     def ping = Action { implicit request =>
         val longitude = request.getQueryString("longitude")
         val latitude = request.getQueryString("latitude")
@@ -18,9 +21,6 @@ object Application extends Controller {
           BadRequest("status" -> "error")
         }
     }
-
-    private val widthFactor = 100
-    private val heightFactor = 100
 
     def getMap = Action { implicit request =>
         val cornerTLLat = request.getQueryString("corner_tl_lat")
