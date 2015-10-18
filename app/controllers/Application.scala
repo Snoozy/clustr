@@ -18,7 +18,7 @@ object Application extends Controller {
           Point.create(latitude.get.toDouble, longitude.get.toDouble, deviceToken.get)
           Ok(Json.obj("status" -> "success"))
         } else {
-          BadRequest("status" -> "error")
+          BadRequest(Json.obj("status" -> "error"))
         }
     }
 

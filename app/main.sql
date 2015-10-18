@@ -6,4 +6,4 @@ CREATE TABLE point (
     PRIMARY KEY (`point_id`),
     INDEX `point_latitude_idx` (`latitude` DESC),
     INDEX `point_longitude_idx` (`longitude` DESC)
-)
+) ENGINE = InnoDB DEFAULT CHARSET = utf8;
