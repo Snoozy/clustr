@@ -40,10 +40,10 @@ object Point {
         }
     }
 
-    def byCoordinates(latitude: Double, longitude: Double, offset: Int) = {
+    def byCoordinates(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double) = {
         DB.withConnection { implicit connection =>
-            SQL("SELECT * FROM point WHERE (latitude > {lat} - {offset} AND latitude < {lat} + {offset}) AND (longitude > {long} - {offset} AMD longitude < {long} + {offset})")
-                .on('lat -> latitude, 'long -> longitude, 'offset -> offset).as(pointParser *)
+            SQL("SELECT * FROM point WHERE (latitude > {lat2} AND latitude < {lat1}) AND (longitude > {long2} AMD longitude < {long1}")
+                .on('lat2 -> latitude2, 'long2 -> longitude2, 'long1 -> longitude1, 'lat1 -> latitude1).as(pointParser *)
         }
     }
 
