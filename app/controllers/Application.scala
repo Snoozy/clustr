@@ -29,7 +29,19 @@ object Application extends Controller {
         val cornerBRLong = request.getQueryString("corner_br_long")
         if (cornerTLLat.isDefined && cornerTLLong.isDefined && cornerBRLat.isDefined && cornerBRLat.isDefined) {
             val points = Point.byCoordinates(cornerTLLat.get.toDouble, cornerTLLong.get.toDouble, cornerBRLat.get.toDouble, cornerBRLong.get.toDouble)
-            Ok("")
+            val quadrants = Compute.compute(new Coordinate(cornerTLLong.get.toDouble, cornerTLLat.get.toDouble), new Coordinate(cornerBRLong.get.toDouble, cornerBRLat.get.toDouble), WidthFactor, HeightFactor, points.toArray)
+            var json = Json.arr()
+            quadrants.foreach { quads =>
+                var jsonArr = Json.arr()
+                quads.foreach{ q =>
+                    jsonArr = jsonArr.+:(Json.obj(
+                        "coordinate" -> Json.obj("latitude" -> q.coordinate.latitude, "longitude" -> q.coordinate.longitude),
+                        "users" -> q.users
+                    ))
+                }
+                json = json.+:(jsonArr)
+            }
+            Ok(json)
         } else {
             BadRequest(Json.obj("error" -> "Format incorrect."))
         }

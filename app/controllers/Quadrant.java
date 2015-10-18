@@ -1,3 +1,5 @@
+package controllers;
+
 public class Quadrant {
     public Coordinate coordinate;
     public int users;

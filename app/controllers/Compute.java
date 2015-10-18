@@ -1,5 +1,7 @@
+package controllers;
+
 public class Compute {
-    public Quadrant[][] compute(Coordinate a, Coordinate b, int numCol, int numRow, Coordinate[] users) {
+    public static Quadrant[][] compute(Coordinate a, Coordinate b, int numCol, int numRow, Coordinate[] users) {
         double quadWidth = (b.longitude - a.longitude) / numCol;
         double quadHeight = (a.latitude - b.latitude) / numRow;
         Quadrant[][] map = new Quadrant[numRow][numCol];

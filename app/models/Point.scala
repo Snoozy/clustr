@@ -26,6 +26,14 @@ object Point {
         }
     }
 
+    private val pointParserSimple: RowParser[controllers.Coordinate] = {
+        get[Double]("latitude") ~
+            get[Double]("longitude") map {
+            case latitude ~ longitude =>
+                new controllers.Coordinate(longitude, latitude)
+        }
+    }
+
     def create(latitude: Double, longitude: Double, deviceToken: String) = {
         DB.withConnection { implicit connection =>
             SQL("INSERT INTO point (latitude, longitude, device_token) VALUES ({lat}, {long}, {device}")
@@ -43,7 +51,7 @@ object Point {
     def byCoordinates(latitude1: Double, longitude1: Double, latitude2: Double, longitude2: Double) = {
         DB.withConnection { implicit connection =>
             SQL("SELECT * FROM point WHERE (latitude > {lat2} AND latitude < {lat1}) AND (longitude > {long2} AMD longitude < {long1}")
-                .on('lat2 -> latitude2, 'long2 -> longitude2, 'long1 -> longitude1, 'lat1 -> latitude1).as(pointParser *)
+                .on('lat2 -> latitude2, 'long2 -> longitude2, 'long1 -> longitude1, 'lat1 -> latitude1).as(pointParserSimple *)
         }
     }
 
