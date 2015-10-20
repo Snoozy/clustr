@@ -3,21 +3,6 @@ package controllers;
 import java.util.*;
 
 public class Compute {
-    public static void main(String[] args) {
-        Coordinate[] users = new Coordinate[10];
-        Random rand = new Random();
-        for (int i = 0; i < 10; i++) {
-            users[i] = new Coordinate(rand.nextInt(100), rand.nextInt(100));
-            System.out.println("User " + i + ": " + users[i].latitude + ", " + users[i].longitude);
-        }
-        Quadrant[][] map = compute(new Coordinate(100, 0), new Coordinate(0, 100), 10, 10, users);
-        for (Quadrant[] row : map) {
-            for (Quadrant q : row) {
-                System.out.print(q.users + ", ");
-            }
-            System.out.println();
-        }
-    }
 
     public static Quadrant[][] compute(Coordinate a, Coordinate b, int numCol, int numRow, Coordinate[] users) {
         double quadWidth = (b.longitude - a.longitude) / numCol;
